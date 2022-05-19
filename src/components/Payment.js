@@ -32,7 +32,7 @@ function Payment() {
     }
     getClientSecret();
   }, [basket])
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
