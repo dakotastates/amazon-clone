@@ -9,6 +9,10 @@ import Payment from './components/Payment'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider'
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
+
+const promise = loadStripe('pk_test_51L1F70IVhxIy5qAnH5pZ7NX9VM6tCvcZAyBy0ebp0pwreo0rirTcR1zKXbNNejdphHPOjONGFTNhJPT9Ruh6etmy00PFqugjXf');
 
 function App() {
 
@@ -39,7 +43,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login/>} />
           <Route path='/checkout' element={<><Header /><Checkout/></>} />
-          <Route path='/payment' element={<><Header /><Payment/></>} />
+          <Route path='/payment' element={<><Header /><Elements stripe={promise}><Payment/></Elements></>} />
           <Route path='/' element={<><Header /><Home/></>} />
           <Route path="*" element={<><Header /><NotFound/></>}/>
         </Routes>
