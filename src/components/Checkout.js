@@ -2,9 +2,12 @@ import '../styles/Checkout.css'
 import Subtotal from './Subtotal'
 import CheckoutProduct from './CheckoutProduct'
 import { useStateValue } from '../StateProvider'
+import { useNavigate } from 'react-router-dom';
 
 function Checkout() {
   const [{ basket, user }, dispatch] = useStateValue();
+
+  const navigation = useNavigate();
 
 
   return(
@@ -17,8 +20,8 @@ function Checkout() {
         />
 
         <div>
-          <h3>Hello, {user?.email}</h3>
-          {basket.length === 0 ? <h2 className='checkout__title'><strong>Your Amazon Cart is empty.</strong></h2> : <h2 className='checkout__title'>Shopping Cart</h2>}
+          <h3>Hello, {user?.displayName}</h3>
+          {basket.length === 0 ? <div><h2 className='checkout__title'><strong>Your Amazon Cart is empty.</strong></h2> {!user ? <button onClick={()=> navigation('/login') }>Login to your account</button> : null} </div>: <h2 className='checkout__title'>Shopping Cart</h2>}
           {basket.map(item => (
             <CheckoutProduct
               id={item.id}

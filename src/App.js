@@ -5,6 +5,8 @@ import Home from './components/Home'
 import NotFound from './components/NotFound'
 import Checkout from './components/Checkout'
 import Login from './components/Login'
+import Register from './components/Register'
+import Admin from './admin/Admin'
 import Payment from './components/Payment'
 import Orders from './components/Orders'
 import ProductPage from './components/ProductPage'
@@ -19,6 +21,7 @@ const promise = loadStripe('pk_test_51L1F70IVhxIy5qAnH5pZ7NX9VM6tCvcZAyBy0ebp0pw
 function App() {
 
   const [{ basket }, dispatch] = useStateValue();
+  const admin = true
 
   useEffect(()=>{
     auth.onAuthStateChanged(authUser =>{
@@ -45,9 +48,11 @@ function App() {
         <Routes>
           <Route path='/product/:id' element={<><Header /><ProductPage /></>} />
           <Route path='/login' element={<Login/>} />
+          <Route path='/register' element={<Register />} />
           <Route path='/checkout' element={<><Header /><Checkout/></>} />
           <Route path='/orders' element={<><Header /><Orders/></>} />
           <Route path='/payment' element={<><Header /><Elements stripe={promise}><Payment/></Elements></>} />
+          {admin ?   <Route path='/admin/*' element={<Admin/>} /> : <Route path="*" element={<><Header /><NotFound/></>}/>}
           <Route path='/' element={<><Header /><Home/></>} />
           <Route path="*" element={<><Header /><NotFound/></>}/>
         </Routes>

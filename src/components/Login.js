@@ -21,18 +21,7 @@ function Login() {
       .catch(error => alert(error.message))
   }
 
-  const register = e =>{
-    e.preventDefault()
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth) =>{
-        if (auth){
-          navigation('/');
-        }
-      })
-      .catch(error => alert(error.message))
-  }
 
   return(
     <div className='login'>
@@ -60,7 +49,7 @@ function Login() {
           By signing-in you agree to AMAZON FAKE CLONE's Conditions of Use & Sale. Please see our Privary Notice, our Cookies Notice and our Interest-Based Ads Notice.
         </p>
 
-        <button className='login__registerButton' onClick={register}>Create your Amazon account</button>
+        <button className='login__registerButton' onClick={()=>navigation('/register')}>Create your Amazon account</button>
       </div>
     </div>
   )

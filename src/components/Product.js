@@ -49,7 +49,7 @@ function Product({id, title, image, price, rating}) {
         }} )}
       />
 
-      <button onClick={addToBasket}>Add to Basket</button>
+      <button onClick={addToBasket}>Add to Cart</button>
     </div>
   )
 }
