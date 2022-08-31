@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css';
 import Header from './components/Header'
 import Home from './components/Home'
@@ -21,23 +21,29 @@ const promise = loadStripe('pk_test_51L1F70IVhxIy5qAnH5pZ7NX9VM6tCvcZAyBy0ebp0pw
 function App() {
 
   const [{ basket }, dispatch] = useStateValue();
-  const admin = true
+  const [admin, setAdmin] = useState(false)
+
 
   useEffect(()=>{
     auth.onAuthStateChanged(authUser =>{
-      console.log('The user is', authUser)
 
-      if (authUser){
-        dispatch({
-          type: 'SET_USER',
-          user: authUser
-        })
-      } else {
-        dispatch({
-          type: 'SET_USER',
-          user: null
-        })
-      }
+      authUser?.getIdTokenResult().then(idTokenResult =>{
+        authUser.admin = idTokenResult?.claims.admin
+        if (authUser){
+          dispatch({
+            type: 'SET_USER',
+            user: authUser
+          })
+        } else {
+          dispatch({
+            type: 'SET_USER',
+            user: null
+          })
+        }
+
+        setAdmin(authUser?.admin)
+      })
+
     })
   },[])
 
