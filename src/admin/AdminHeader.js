@@ -48,6 +48,12 @@ function AdminHeader() {
             <span className='header__optionLineTwo'>Admin</span>
           </div>
         </Link>
+        <Link to='../manage-products'>
+          <div className='header__option'>
+            <span className='header__optionLineOne'>Manage</span>
+            <span className='header__optionLineTwo'>Products</span>
+          </div>
+        </Link>
 
       </div>
 

@@ -37,6 +37,17 @@ function Header() {
             <span className='header__optionLineTwo'>{user ? 'Sign Out' : 'Sign In'}</span>
           </div>
         </Link>
+        {user?.admin ?
+          <Link to='/admin'>
+            <div className='header__option'>
+              <span className='header__optionLineOne'>Admin</span>
+              <span className='header__optionLineTwo'>Portal</span>
+            </div>
+          </Link>
+          :
+          null
+        }
+
         <Link to='/orders'>
           <div className='header__option'>
             <span className='header__optionLineOne'>Returns</span>

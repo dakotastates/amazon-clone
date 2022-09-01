@@ -1,0 +1,38 @@
+.navbar {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #232F3E;
+  position: sticky;
+  top: 60px;
+  z-index: 100;
+}
+
+.nav__logo {
+  width: 100px;
+  object-fit: contain;
+  margin: 20px;
+  margin-top: 18px;
+}
+
+.header__nav{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nav__option{
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: white;
+}
+
+.nav__optionLineOne {
+  font-size: 10px;
+}
+
+.nav__optionLineTwo {
+  font-size: 13px;
+  font-weight: 800;
+}
