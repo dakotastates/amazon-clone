@@ -11,7 +11,7 @@ import Payment from './components/Payment'
 import Orders from './components/Orders'
 import ProductPage from './components/ProductPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 import { useStateValue } from './StateProvider'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
@@ -22,6 +22,7 @@ function App() {
 
   const [{ basket }, dispatch] = useStateValue();
   const [admin, setAdmin] = useState(false)
+  const [products, setProducts] = useState([])
 
 
   useEffect(()=>{
@@ -47,6 +48,25 @@ function App() {
     })
   },[])
 
+  useEffect(()=>{
+    db
+      .collection('products')
+      .onSnapshot(snapshot => (
+        setProducts(snapshot.docs.map(doc =>({
+          id: doc.id,
+          data: doc.data()
+        })))
+      ))
+
+      if (products){
+        dispatch({
+          type: 'SET_PRODUCTS',
+          products: products
+        })
+      }
+
+  },[])
+
   return (
     <Router>
       <div className="app">
@@ -68,3 +88,13 @@ function App() {
 }
 
 export default App;
+
+
+// dispatch(snapshot.docs.map(doc=>({
+//   type: 'SET_PRODUCTS',
+//   products: doc.data()
+// })))
+// dispatch({
+//   type: 'SET_PRODUCTS',
+//   products: products
+// })
