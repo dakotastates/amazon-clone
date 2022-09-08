@@ -54,6 +54,14 @@ const reducer = (state, action) => {
         products: action.products
       }
 
+    case 'DELETE_PRODUCT':
+
+      const products = state.products.filter(product => product.id !== action.id);
+      return{
+        ...state,
+        products: products
+      }
+
     case 'ADD_PRODUCT':
       return {
         ...state,

@@ -23,6 +23,7 @@ function App() {
   const [{ basket }, dispatch] = useStateValue();
   const [admin, setAdmin] = useState(false)
   const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(false)
 
 
   useEffect(()=>{
@@ -49,23 +50,38 @@ function App() {
   },[])
 
   useEffect(()=>{
+
     db
       .collection('products')
-      .onSnapshot(snapshot => (
-        setProducts(snapshot.docs.map(doc =>({
-          id: doc.id,
-          data: doc.data()
-        })))
-      ))
+      .onSnapshot(snapshot => {
 
-      if (products){
+        if (snapshot.docs){
+          setLoading(true)
+          setProducts(snapshot.docs.map(doc =>({
+            id: doc.id,
+            data: doc.data()
+          })))
+          setLoading(false)
+        }else{
+          console.log('no snapshot')
+        }
+
+
+      })
+
+      if(products.length>1){
+        console.log('not loading', products)
         dispatch({
           type: 'SET_PRODUCTS',
           products: products
         })
+      } else{
+        console.log('loading', products)
       }
 
   },[])
+
+
 
   return (
     <Router>

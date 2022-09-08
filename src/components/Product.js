@@ -2,7 +2,7 @@ import '../styles/Product.css'
 import { useStateValue } from '../StateProvider'
 import { useNavigate } from 'react-router-dom';
 
-function Product({id, title, image, price, rating}) {
+function Product({id, title, brand, image, price, rating}) {
   const [{ basket }, dispatch] = useStateValue();
 
   const navigation = useNavigate();
@@ -14,6 +14,7 @@ function Product({id, title, image, price, rating}) {
         item: {
           id: id,
           title: title,
+          brand: brand,
           image: image,
           price: price,
           rating: rating
@@ -24,7 +25,7 @@ function Product({id, title, image, price, rating}) {
   return(
     <div className='product'>
       <div className='product__info'>
-        <p>{title}</p>
+        <p>{title}</p><p>{brand}</p>
         <p className='product__price'>
           <small>$</small>
           <strong>{price}</strong>

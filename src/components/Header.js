@@ -1,5 +1,6 @@
 import '../styles/Header.css'
-import SearchIcon from '@material-ui/icons/Search';
+
+import Search from './Search';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import { Link } from 'react-router-dom';
 import { useStateValue } from '../StateProvider'
@@ -25,10 +26,7 @@ function Header() {
         />
       </Link>
 
-      <div className='header__search'>
-        <input className='header__searchInput' type='text' />
-        <SearchIcon className='header__searchIcon' />
-      </div>
+      <Search />
 
       <div className='header__nav'>
         <Link to={!user && '/login'}>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import '../styles/Login.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase'
@@ -11,24 +11,66 @@ function AddProduct() {
   const [price, setPrice] = useState('')
   const [image, setImage] = useState('')
   const [category, setCategory] = useState('')
+  const [categories, setCategories] = useState([])
+  const [checkedCategories, setCheckedCategories] = useState([])
 
   const [error, setError] = useState(null)
 
   const navigation = useNavigate();
 
+  useEffect(()=>{
+    db
+      .collection('category')
+      .onSnapshot(snapshot => (
+        setCategories(snapshot.docs.map(doc =>({
+          id: doc.id,
+          data: doc.data()
+        })))
+      ))
+  },[])
+
 
 
   const addProduct = e =>{
     e.preventDefault()
-
+    console.log('checked in product', checkedCategories)
     db.collection('products').add({
        title: title,
        brand: brand,
        description: description,
        price: price,
        image: image,
+       categories: checkedCategories
+     }).then(()=>{
+        navigation('../');
+     }).catch((err) =>{
+       console.log(err)
      })
 
+  }
+
+  const addCategory = e =>{
+    e.preventDefault()
+
+    db.collection('category').add({
+      category: category
+    })
+
+  }
+
+  const handleToggle = c => ()=>{
+
+    const clickedCategory = checkedCategories.indexOf(c.id);
+    // console.log('clicked Cat', clickedCategory)
+    const all = [...checkedCategories]
+
+    if (clickedCategory === -1) {
+      all.push(c.data);
+    } else {
+      all.splice(clickedCategory, 1);
+    }
+    setCheckedCategories(all);
+    console.log(all)
   }
 
 
@@ -54,6 +96,23 @@ function AddProduct() {
 
           <h5>Image URL</h5>
           <input type='text' value={image} onChange={e => setImage(e.target.value)} />
+
+          <h5>Categories</h5>
+          {categories?.map((cat, i)=>(
+
+            <li key={i} className="list-unstyled">
+              <input
+                onChange={handleToggle(cat)}
+                type="checkbox"
+                className="mr-2"
+              />
+              <label className="form-check-label">{cat.data.category}</label>
+            </li>
+
+          ))}
+          <input type='text' value={category} onChange={e => setCategory(e.target.value)} />
+
+          <button onClick={addCategory}>Add Category</button>
 
 
 
