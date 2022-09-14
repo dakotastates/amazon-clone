@@ -62,23 +62,16 @@ function App() {
             data: doc.data()
           })))
           setLoading(false)
+          if (!loading){
+            dispatch({
+              type: 'SET_PRODUCTS',
+              products: products
+            })
+          }
         }else{
           console.log('no snapshot')
         }
-
-
       })
-
-      if(products.length>1){
-        console.log('not loading', products)
-        dispatch({
-          type: 'SET_PRODUCTS',
-          products: products
-        })
-      } else{
-        console.log('loading', products)
-      }
-
   },[])
 
 

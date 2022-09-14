@@ -1,5 +1,6 @@
 import { db } from '../firebase'
 import { useStateValue } from '../StateProvider'
+import { useNavigate } from 'react-router-dom';
 
 
 function Product({product}) {
@@ -8,9 +9,10 @@ function Product({product}) {
 
   const { title, brand, description, price} = product?.data
 
+  const navigation = useNavigate();
+
   const handleDelete = e =>{
     e.preventDefault()
-    console.log(product.id)
     db.collection('products').doc(product.id).delete()
 
     dispatch({
@@ -21,7 +23,7 @@ function Product({product}) {
 
   const handleUpdate = e =>{
     e.preventDefault()
-    console.log('update')
+    navigation('./add-product', { state: { product: product } });
   }
 
 
