@@ -2,7 +2,7 @@ import '../styles/Product.css'
 import { useStateValue } from '../StateProvider'
 import { useNavigate } from 'react-router-dom';
 
-function Product({id, title, brand, image, price, rating}) {
+function Product({id, title, description, brand, image, price, rating, inStock}) {
   const [{ basket }, dispatch] = useStateValue();
 
   const navigation = useNavigate();
@@ -15,6 +15,7 @@ function Product({id, title, brand, image, price, rating}) {
           id: id,
           title: title,
           brand: brand,
+          description: description,
           image: image,
           price: price,
           rating: rating
@@ -44,9 +45,12 @@ function Product({id, title, brand, image, price, rating}) {
         onClick={() => navigation(`/product/${id}`, {state:{
           id: id,
           title: title,
+          brand: brand,
+          description: description,
           image: image,
           price: price,
-          rating: rating
+          rating: rating,
+          inStock: inStock
         }} )}
       />
 

@@ -17,6 +17,7 @@
   width: 100%;
   object-fit: contain;
   margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .product__info {

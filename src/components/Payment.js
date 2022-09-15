@@ -23,6 +23,8 @@ function Payment() {
   const [succeeded, setSucceeded] = useState(false);
   const [clientSecret, setClientSecret] = useState('')
 
+  
+
   useEffect(() =>{
     const getClientSecret = async () => {
       const response = await axios({
@@ -33,7 +35,7 @@ function Payment() {
     }
     getClientSecret();
   }, [basket])
-
+// console.log('clientSecret', clientSecret)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);

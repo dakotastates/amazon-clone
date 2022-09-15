@@ -22,12 +22,14 @@ function Home() {
         {products.map(product =>(
           <Product
             key={product.id}
-            id={product.data.id}
+            id={product.id}
             title={product.data.title}
             brand={product.data.brand}
+            description={product.data.description}
             price={product.data.price}
             image={product.data.image}
             rating={5}
+            inStock={true}
           />
         ))}
       </div>

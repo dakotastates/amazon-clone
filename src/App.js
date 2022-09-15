@@ -23,7 +23,7 @@ function App() {
   const [{ basket }, dispatch] = useStateValue();
   const [admin, setAdmin] = useState(false)
   const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
 
 
   useEffect(()=>{
@@ -56,24 +56,51 @@ function App() {
       .onSnapshot(snapshot => {
 
         if (snapshot.docs){
-          setLoading(true)
           setProducts(snapshot.docs.map(doc =>({
             id: doc.id,
             data: doc.data()
           })))
-          setLoading(false)
-          if (!loading){
-            dispatch({
-              type: 'SET_PRODUCTS',
-              products: products
-            })
+
+
+          // snapshot.docs.map(doc =>{
+          //   if (doc){
+          //
+          //     dispatch({
+          //       type: 'SET_PRODUCTS',
+          //       products: {
+          //         id: doc.id,
+          //         data: doc.data()
+          //       }
+          //     })
+          //   }
+          //
+          // })
+
+
+          // setLoading(true)
+          // setProducts(snapshot.docs.map(doc =>({
+          //   id: doc.id,
+          //   data: doc.data()
+          // })))
+          // setLoading(true)
+          // if (!loading){
+            // dispatch({
+            //   type: 'SET_PRODUCTS',
+            //   products: products
+            // })
           }
-        }else{
-          console.log('no snapshot')
-        }
+        // }else{
+          // console.log('no snapshot')
+        // }
       })
   },[])
 
+  useEffect(()=>{
+    dispatch({
+      type: 'SET_PRODUCTS',
+      products: products
+    })
+  },[products])
 
 
   return (
