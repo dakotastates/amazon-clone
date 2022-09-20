@@ -1,6 +1,7 @@
 import '../styles/ProductPage.css'
 import {useLocation} from 'react-router-dom';
 import Product from './Product'
+import Rating from './Rating'
 
 function ProductPage() {
   const location = useLocation();
@@ -25,9 +26,7 @@ function ProductPage() {
             <p>{brand}</p>
 
             <div className='pp__rating'>
-              {Array(rating).fill().map((_, i) => (
-                <p>⭐</p>
-              ))}
+              <Rating productId={id} rating={rating} />
             </div>
             <hr/>
             <p className='pp__price'>
