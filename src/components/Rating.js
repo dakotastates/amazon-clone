@@ -3,9 +3,9 @@ import '../styles/Rating.css'
 import { db } from '../firebase'
 import { useStateValue } from '../StateProvider'
 
-function Rating({productId, rating}) {
+function Rating({productId}) {
 
-  const [starRating, setStarRating] = useState(rating);
+  const [starRating, setStarRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [allRatings, setAllRatings] = useState([]);
 
@@ -43,6 +43,7 @@ function Rating({productId, rating}) {
     setStarRating(allRatings?.reduce((ratings, rating)=> (rating.ratings.rating + ratings), 0)/ allRatings.length)
   },[allRatings])
 
+
   return(
     <div className="star-rating">
     {[...Array(5)].map((star, index) => {
@@ -55,11 +56,13 @@ function Rating({productId, rating}) {
           onClick={() => handleRatings(index)}
           onMouseEnter={() => setHover(index)}
           onMouseLeave={() => setHover(starRating)}
+          disabled={!user}
         >
           <span className="star">&#9733;</span>
         </button>
       );
     })}
+    <div className='rating__num'>{allRatings.length} ratings</div>
   </div>
   )
 }

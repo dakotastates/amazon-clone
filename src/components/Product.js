@@ -1,8 +1,9 @@
 import '../styles/Product.css'
 import { useStateValue } from '../StateProvider'
 import { useNavigate } from 'react-router-dom';
+import Rating from './Rating'
 
-function Product({id, title, description, brand, image, price, rating, inStock}) {
+function Product({id, title, description, brand, image, price, inStock}) {
   const [{ basket }, dispatch] = useStateValue();
 
   const navigation = useNavigate();
@@ -18,7 +19,6 @@ function Product({id, title, description, brand, image, price, rating, inStock})
           description: description,
           image: image,
           price: price,
-          rating: rating
         }
       })
   }
@@ -32,10 +32,8 @@ function Product({id, title, description, brand, image, price, rating, inStock})
           <strong>{price}</strong>
         </p>
 
-        <div className='product__rating'>
-          {Array(rating).fill().map((_, i) => (
-            <p>⭐</p>
-          ))}
+        <div className='pp__rating'>
+          <Rating productId={id}  />
         </div>
       </div>
 
@@ -49,7 +47,6 @@ function Product({id, title, description, brand, image, price, rating, inStock})
           description: description,
           image: image,
           price: price,
-          rating: rating,
           inStock: inStock
         }} )}
       />

@@ -2,10 +2,12 @@ import '../styles/ProductPage.css'
 import {useLocation} from 'react-router-dom';
 import Product from './Product'
 import Rating from './Rating'
+import Reviews from './Reviews'
+
 
 function ProductPage() {
   const location = useLocation();
-  const { id, title, brand, description, image, price, rating, inStock } = location.state
+  const { id, title, brand, description, image, price, inStock } = location.state
 
   return(
     <div className='product__page'>
@@ -26,7 +28,7 @@ function ProductPage() {
             <p>{brand}</p>
 
             <div className='pp__rating'>
-              <Rating productId={id} rating={rating} />
+              <Rating productId={id}  />
             </div>
             <hr/>
             <p className='pp__price'>
@@ -52,15 +54,9 @@ function ProductPage() {
       </div>
 
       <div className='pp__bottom'>
-        <div className='product__reviews'>
-          <h1>Reviews</h1>
-          {/* Reviews */}
-        </div>
-
-
+        <Reviews productId={id} />
       </div>
 
-      {/* Reviews */}
     </div>
   )
 }

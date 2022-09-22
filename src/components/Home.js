@@ -5,7 +5,7 @@ import { useStateValue } from '../StateProvider'
 function Home() {
 
   const [{ products }, dispatch] = useStateValue();
-
+  
   return(
     <div className='home'>
       <div className='home__container'>
@@ -28,7 +28,6 @@ function Home() {
             description={product.data.description}
             price={product.data.price}
             image={product.data.image}
-            rating={5}
             inStock={true}
           />
         ))}

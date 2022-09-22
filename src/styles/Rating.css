@@ -10,3 +10,13 @@ button {
 .off {
   color: #ccc;
 }
+
+.star-rating{
+  display: flex;
+
+}
+
+.rating__num{
+  display: flex;
+  padding-left: 10px;
+}

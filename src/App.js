@@ -10,6 +10,7 @@ import Admin from './admin/Admin'
 import Payment from './components/Payment'
 import Orders from './components/Orders'
 import ProductPage from './components/ProductPage'
+import CreateReview from './components/CreateReview'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { auth, db } from './firebase';
 import { useStateValue } from './StateProvider'
@@ -20,7 +21,7 @@ const promise = loadStripe('pk_test_51L1F70IVhxIy5qAnH5pZ7NX9VM6tCvcZAyBy0ebp0pw
 
 function App() {
 
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
   const [admin, setAdmin] = useState(false)
   const [products, setProducts] = useState([])
   // const [loading, setLoading] = useState(false)
@@ -54,48 +55,18 @@ function App() {
     db
       .collection('products')
       .onSnapshot(snapshot => {
-
         if (snapshot.docs){
           setProducts(snapshot.docs.map(doc =>({
             id: doc.id,
             data: doc.data()
           })))
-
-
-          // snapshot.docs.map(doc =>{
-          //   if (doc){
-          //
-          //     dispatch({
-          //       type: 'SET_PRODUCTS',
-          //       products: {
-          //         id: doc.id,
-          //         data: doc.data()
-          //       }
-          //     })
-          //   }
-          //
-          // })
-
-
-          // setLoading(true)
-          // setProducts(snapshot.docs.map(doc =>({
-          //   id: doc.id,
-          //   data: doc.data()
-          // })))
-          // setLoading(true)
-          // if (!loading){
-            // dispatch({
-            //   type: 'SET_PRODUCTS',
-            //   products: products
-            // })
           }
-        // }else{
-          // console.log('no snapshot')
-        // }
+
       })
   },[])
 
   useEffect(()=>{
+
     dispatch({
       type: 'SET_PRODUCTS',
       products: products
@@ -109,6 +80,8 @@ function App() {
 
         <Routes>
           <Route path='/product/:id' element={<><Header /><ProductPage /></>} />
+          {user ? <Route path='/create-review/:id' element={<><Header /><CreateReview /></>} /> : <Route path="*" element={<><Header /><NotFound/></>}/>}
+
           <Route path='/login' element={<Login/>} />
           <Route path='/register' element={<Register />} />
           <Route path='/checkout' element={<><Header /><Checkout/></>} />
