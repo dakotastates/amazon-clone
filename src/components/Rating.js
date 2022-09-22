@@ -3,11 +3,12 @@ import '../styles/Rating.css'
 import { db } from '../firebase'
 import { useStateValue } from '../StateProvider'
 
-function Rating({productId}) {
+function Rating({productId, setReviewRating}) {
 
   const [starRating, setStarRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [allRatings, setAllRatings] = useState([]);
+  const [rating, setRating] = useState(0);
 
   const [{ user }, dispatch] = useStateValue();
 
@@ -21,8 +22,8 @@ function Rating({productId}) {
         userId: user?.uid,
         rating: index
       })
+    setRating(index)
 
-    // setStarRating(index)
   }
 
   useEffect(()=>{
@@ -40,7 +41,16 @@ function Rating({productId}) {
   },[])
 
   useEffect(()=>{
-    setStarRating(allRatings?.reduce((ratings, rating)=> (rating.ratings.rating + ratings), 0)/ allRatings.length)
+    const userRating = allRatings.filter(rating => rating.ratings.userId == user?.uid)
+    if (userRating.length > 0){
+      setStarRating(userRating[0].ratings.rating)
+    } else {
+      setStarRating(allRatings?.reduce((ratings, rating)=> (rating.ratings.rating + ratings), 0)/ allRatings.length)
+    }
+
+    if (setReviewRating){
+      setReviewRating(starRating)
+    }
   },[allRatings])
 
 

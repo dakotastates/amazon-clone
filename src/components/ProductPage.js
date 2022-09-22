@@ -1,13 +1,40 @@
+import {useEffect, useState} from 'react';
 import '../styles/ProductPage.css'
-import {useLocation} from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import Product from './Product'
 import Rating from './Rating'
 import Reviews from './Reviews'
+import { db } from '../firebase'
 
 
 function ProductPage() {
-  const location = useLocation();
-  const { id, title, brand, description, image, price, inStock } = location.state
+  const [product, setProduct] = useState([])
+
+  const params = useParams();
+  const navigation = useNavigate();
+
+  const { title, brand, description, image, price } = product
+
+
+  useEffect(()=>{
+    const docRef = db.collection("products").doc(params.id);
+
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+          // console.log("Document data:", doc.data());
+          const data = doc.data()
+          setProduct(data)
+      } else {
+            // doc.data() will be undefined in this case
+          console.log("No such document!");
+          navigation('*')
+      }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+
+  },[product])
+
 
   return(
     <div className='product__page'>
@@ -28,7 +55,7 @@ function ProductPage() {
             <p>{brand}</p>
 
             <div className='pp__rating'>
-              <Rating productId={id}  />
+              <Rating productId={params.id}  />
             </div>
             <hr/>
             <p className='pp__price'>
@@ -46,7 +73,7 @@ function ProductPage() {
             <strong>{price}</strong>
           </p>
 
-          <p>{inStock ? 'In Stock' : 'Out of Stock'}</p>
+          <p>{true ? 'In Stock' : 'Out of Stock'}</p>
 
           <button>Add to Cart</button>
         </div>
@@ -54,7 +81,7 @@ function ProductPage() {
       </div>
 
       <div className='pp__bottom'>
-        <Reviews productId={id} />
+        <Reviews productId={params.id} image={image} title={title} />
       </div>
 
     </div>

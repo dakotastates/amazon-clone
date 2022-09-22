@@ -3,7 +3,7 @@ import { useStateValue } from '../StateProvider'
 function Dashboard() {
 
   const [{ products }, dispatch] = useStateValue();
-  console.log(products)
+  
   return(
     <div>
       <h1>Dashboard</h1>

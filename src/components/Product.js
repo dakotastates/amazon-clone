@@ -40,15 +40,7 @@ function Product({id, title, description, brand, image, price, inStock}) {
       <img
         src={image}
         alt={title}
-        onClick={() => navigation(`/product/${id}`, {state:{
-          id: id,
-          title: title,
-          brand: brand,
-          description: description,
-          image: image,
-          price: price,
-          inStock: inStock
-        }} )}
+        onClick={() => navigation(`/product/${id}`)}
       />
 
       <button onClick={addToBasket}>Add to Cart</button>
