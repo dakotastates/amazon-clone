@@ -14,11 +14,12 @@ function AllProducts() {
     <table>
       <thead>
         <tr>
+          <th>Image</th>
           <th>Title</th>
           <th>Brand</th>
           <th>Price</th>
-          <th>Description</th>
-          <th>ImageURL</th>
+          <th>Quantity</th>
+
         </tr>
       </thead>
        <tbody>

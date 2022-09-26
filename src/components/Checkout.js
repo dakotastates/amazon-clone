@@ -35,9 +35,13 @@ function Checkout() {
 
         </div>
       </div>
-      <div className='checkout__right'>
-        <Subtotal />
-      </div>
+      {(basket.length > 0) ?
+        <div className='checkout__right'>
+          <Subtotal />
+        </div>
+        : null}
+
+
     </div>
   )
 }

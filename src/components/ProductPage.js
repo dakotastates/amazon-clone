@@ -5,15 +5,19 @@ import Product from './Product'
 import Rating from './Rating'
 import Reviews from './Reviews'
 import { db } from '../firebase'
+import { useStateValue } from '../StateProvider'
 
 
 function ProductPage() {
   const [product, setProduct] = useState([])
+  const [inStock, setInStock] = useState(false)
+
+  const [{ basket }, dispatch] = useStateValue();
 
   const params = useParams();
   const navigation = useNavigate();
 
-  const { title, brand, description, image, price } = product
+  const { title, brand, description, image, price, quantity } = product
 
 
   useEffect(()=>{
@@ -34,6 +38,28 @@ function ProductPage() {
     });
 
   },[product])
+
+  useEffect(()=>{
+    if (quantity == 0){
+      setInStock(false)
+    } else{
+      setInStock(true)
+    }
+  },[product])
+
+  const addToBasket = () =>{
+      dispatch({
+        type: 'ADD_TO_BASKET',
+        item: {
+          id: params.id,
+          title: title,
+          brand: brand,
+          description: description,
+          image: image,
+          price: price,
+        }
+      })
+  }
 
 
   return(
@@ -73,9 +99,10 @@ function ProductPage() {
             <strong>{price}</strong>
           </p>
 
-          <p>{true ? 'In Stock' : 'Out of Stock'}</p>
+          <p>{inStock ? 'In Stock' : 'Out of Stock'}</p>
 
-          <button>Add to Cart</button>
+          <button onClick={addToBasket} disabled={!inStock}>{inStock ? 'Add to Cart' : 'Out of Stock'}</button>
+
         </div>
 
       </div>

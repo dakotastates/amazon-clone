@@ -29,7 +29,7 @@ function Orders() {
       setOrders([user])
     }
 
-  },[])
+  },[orders])
 
   if (user) {
     return(

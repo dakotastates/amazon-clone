@@ -7,7 +7,7 @@ function Product({product}) {
 
   const [{  }, dispatch] = useStateValue();
 
-  const { title, brand, description, price} = product?.data
+  const { image, title, brand, quantity, price} = product?.data
 
   const navigation = useNavigate();
 
@@ -29,10 +29,17 @@ function Product({product}) {
 
   return(
     <tr>
+      <td>
+        <img
+          className='allProduct__image'
+          src={image}
+          alt={title}
+        />
+      </td>
       <td>{title}</td>
       <td>{brand}</td>
       <td>{price}</td>
-      <td>{description}</td>
+      <td>{quantity}</td>
 
 
       <td>

@@ -5,15 +5,24 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import { Link } from 'react-router-dom';
 import { useStateValue } from '../StateProvider'
 import { auth } from '../firebase'
+import { useNavigate} from 'react-router-dom';
 
 
 function Header() {
 
   const [{ basket, user }, dispatch] = useStateValue();
+  const navigation = useNavigate();
 
   const handleAuthentication = () =>{
     if (user) {
-      auth.signOut();
+      auth.signOut().then(() =>{
+        dispatch({
+          type: 'SET_USER',
+          user: null
+        })
+        navigation('/login')
+      })
+
     }
   }
 
