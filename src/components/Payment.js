@@ -8,6 +8,7 @@ import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from '../reducer';
 import axios from '../axios';
 import { db } from '../firebase'
+import CreateAddress from './CreateAddress'
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -22,8 +23,29 @@ function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [succeeded, setSucceeded] = useState(false);
   const [clientSecret, setClientSecret] = useState('')
+  const [addressChange, setAddressChange] = useState(false)
+  const [addresses, setAddresses] = useState([])
+  const [address, setAddress] = useState(null)
 
-  
+  useEffect(()=>{
+    if (!basket.length > 0){
+      navigation('/')
+    }
+  },[])
+
+  useEffect(()=>{
+    db
+      .collection('users')
+      .doc(user?.uid)
+      .collection('address')
+      .onSnapshot(snapshot => (
+        setAddresses(snapshot.docs.map(doc => ({
+          id: doc.id,
+          data: doc.data()
+        })))
+      ))
+  },[])
+
 
   useEffect(() =>{
     const getClientSecret = async () => {
@@ -55,6 +77,7 @@ function Payment() {
         .set({
           basket: basket,
           amount: paymentIntent.amount,
+          shippingAddress: address,
           created: paymentIntent.created
         })
 
@@ -86,9 +109,36 @@ function Payment() {
             <h3>Delivery Address</h3>
           </div>
           <div className='payment__address'>
-            <p>{user?.email}</p>
-            <p>123 React Lane</p>
-            <p>Seattle Wa, 98112</p>
+
+            {addressChange ?
+
+              <div>
+                <CreateAddress user={user} setAddress={setAddress} addresses={addresses} setAddressChange={setAddressChange} />
+              </div>
+
+              :
+
+              <div>
+              {address ?
+                <div>
+
+                  <p>{address.fullName}</p>
+                  <p>{address.addressLine1}</p>
+                  <p>{address.addressLine2}</p>
+                  <p>{address.city} {address.state}, {address.zipCode}</p>
+                </div>
+                :
+                <div>Please provide an address Address</div>
+              }
+
+              </div>
+
+            }
+
+            <div onClick={()=>setAddressChange(!addressChange)}>
+              {addressChange ? 'Close' : 'Change'}
+            </div>
+
           </div>
         </div>
         <div className='payment__section'>
@@ -129,7 +179,7 @@ function Payment() {
                     prefix={'$'}
                   />
                 </div>
-                <button disabled={processing || disabled || succeeded}>
+                <button disabled={processing || disabled || succeeded || !address}>
                   <span>{processing ? <p>Processing...</p> : 'Buy Now'}</span>
                 </button>
 

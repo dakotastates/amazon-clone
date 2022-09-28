@@ -10,6 +10,24 @@
   border-bottom: 1px solid lightgray;
 }
 
+.address__closeBtn{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.address__btns{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.closeBtn{
+  display: flex;
+  margin: 20px;
+  border: solid thin;
+  border-radius: 2px;
+}
+
 .payment__container > h1 a {
   text-decoration: none;
 }
@@ -27,6 +45,82 @@
 
 .payment__address, .payment__items, .payment__details{
   flex: 0.8;
+}
+
+.payment__address{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 50px;
+}
+
+.create__addressContainer > h1 {
+  margin-bottom: 10px;
+}
+
+.new__address{
+  border-radius: 2px;
+  color: #007185;
+  margin-top: 20px;
+}
+
+.address__form{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.address__state, .address__city, .address__zip{
+  margin-right: 10px;
+  width: 100%;
+}
+
+.address__zip > input {
+  margin-top: 10px;
+  height: 20px;
+}
+.address__city > input{
+  margin-top: 10px;
+  height: 20px;
+}
+
+.address__state > input{
+  margin-top: 10px;
+  height: 20px;
+}
+
+.create__addressButton{
+  background: #f0c14b;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid;
+  margin-top: 20px;
+  border-color: #a88743 #9c7e31 #846a29;
+}
+
+.create__address{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create__addressContainer{
+  /* width: 300px; */
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 20px;
+}
+
+.create__addressContainer > form > input{
+  width: 100%;
+  margin-top: 10px;
+  height: 20px;
+  margin-bottom: 10px;
 }
 
 .payment__details > form {

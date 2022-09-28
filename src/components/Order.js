@@ -10,6 +10,7 @@ function Order({ order }) {
       <h2>Order</h2>
       <p>{moment.unix(order.data.created).format('MMMM Do YYYY, h:mma')}</p>
       <p className='order__id'>Order Confirmation:<small><strong> {order.id}</strong></small></p>
+
       {order.data.basket?.map(item => (
         <CheckoutProduct
           id={item.id}

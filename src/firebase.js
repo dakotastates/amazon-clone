@@ -3,6 +3,12 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/functions';
 import 'firebase/compat/storage';
+// import { initializeApp } from 'firebase-admin/app'; 
+
+// initializeApp({
+//     credential: applicationDefault(),
+//     databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
+// });
 
 const firebaseConfig = {
   apiKey: "AIzaSyBQ17Ze2B-iQpg296bjJrofrqZhg6vPjNk",
